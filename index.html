@@ -343,7 +343,7 @@
             {
                 question: "下列句子中，有语病的一项是：",
                 options: [
-                    "A. 他提出并解决了这个问题。",
+                    "A. 他发现并解决了这个问题。",
                     "B. 我们要发扬优点，改正缺点。",
                     "C. 我断定他大概不会来了。",
                     "D. 他第一个举手发言。"
@@ -380,7 +380,7 @@
                 question: "下列句子中，没有语病的一项是：",
                 options: [
                     "A. 通过这次活动，使我受到了深刻的教育。",
-                    "B. 他提出并解决了这个问题。",
+                    "B. 他发现并解决了这个问题。",
                     "C. 他的成绩有了明显的增加。",
                     "D. 我们要发挥优点，改进缺点。"
                 ],
@@ -417,7 +417,7 @@
                 options: [
                     "A. 在老师的帮助下，使他很快改正了错误。",
                     "B. 我们一定要发扬艰苦朴素的优良作风。",
-                    "C. 他提出并解决了这个问题。",
+                    "C. 他解决并发现了这个问题。",
                     "D. 我断定他大概不会来了。"
                 ],
                 correctAnswer: 1, // B选项的索引
@@ -557,6 +557,7 @@
             
             feedback.style.display = 'none';
             submitBtn.disabled = true;
+            submitBtn.style.display = 'inline-block';
             nextBtn.style.display = 'none';
             updateGameInfo();
         }
