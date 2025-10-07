@@ -1,0 +1,16 @@
+function toggleAnswer(questionNum) {
+    const answer = document.getElementById(`answer${questionNum}`);
+    answer.classList.toggle('show');
+    
+    const button = event.target;
+    if (answer.classList.contains('show')) {
+        button.textContent = '隐藏答案';
+    } else {
+        button.textContent = '查看答案';
+    }
+}
+
+// 页面加载完成后执行
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('修改病句练习页面加载完成');
+});

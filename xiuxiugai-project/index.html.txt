@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改病句练习 - 15道题目与答案</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .answer-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 14px;
+        }
+        
+        .answer-btn:hover {
+            background: #2980b9;
+        }
+        
+        .answer {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .answer.show {
+            display: block;
+        }
+        
+        .original {
+            color: #e74c3c;
+            margin-bottom: 8px;
+        }
+        
+        .corrected {
+            color: #27ae60;
+        }
+        
+        .explanation {
+            margin-top: 10px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #95a5a6;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>修改病句练习</h1>
+            <p class="description">15道常见的病句修改题目，点击按钮查看答案和解析</p>
+        </header>
+        
+        <div class="question-container">
+            <!-- 题目1 -->
+            <div class="question">
+                <div class="question-number">题目 1</div>
+                <div class="question-text">通过这次活动，使同学们认识到学习的重要性。</div>
+                <button class="answer-btn" onclick="toggleAnswer(1)">查看答案</button>
+                <div class="answer" id="answer1">
+                    <div class="original">原句：通过这次活动，使同学们认识到学习的重要性。</div>
+                    <div class="corrected">修改：这次活动使同学们认识到学习的重要性。</div>
+                    <div class="explanation">解析：原句主语残缺，去掉"通过"或"使"其中一个即可。</div>
+                </div>
+            </div>
+            
+            <!-- 题目2 -->
+            <div class="question">
+                <div class="question-number">题目 2</div>
+                <div class="question-text">他那崇高的革命品质，经常浮现在我的脑海中。</div>
+                <button class="answer-btn" onclick="toggleAnswer(2)">查看答案</button>
+                <div class="answer" id="answer2">
+                    <div class="original">原句：他那崇高的革命品质，经常浮现在我的脑海中。</div>
+                    <div class="corrected">修改：他那崇高的革命形象，经常浮现在我的脑海中。</div>
+                    <div class="explanation">解析：原句搭配不当，"品质"不能"浮现"，应改为"形象"。</div>
+                </div>
+            </div>
+            
+            <!-- 题目3 -->
+            <div class="question">
+                <div class="question-number">题目 3</div>
+                <div class="question-text">故宫博物院最近展出了两千多年前新出土的文物。</div>
+                <button class="answer-btn" onclick="toggleAnswer(3)">查看答案</button>
+                <div class="answer" id="answer3">
+                    <div class="original">原句：故宫博物院最近展出了两千多年前新出土的文物。</div>
+                    <div class="corrected">修改：故宫博物院最近展出了新出土的两千多年前的文物。</div>
+                    <div class="explanation">解析：原句语序不当，"两千多年前"应该修饰"文物"，而不是"新出土"。</div>
+                </div>
+            </div>
+            
+            <!-- 题目4 -->
+            <div class="question">
+                <div class="question-number">题目 4</div>
+                <div class="question-text">能否刻苦钻研是提高学习成绩的关键。</div>
+                <button class="answer-btn" onclick="toggleAnswer(4)">查看答案</button>
+                <div class="answer" id="answer4">
+                    <div class="original">原句：能否刻苦钻研是提高学习成绩的关键。</div>
+                    <div class="corrected">修改：刻苦钻研是提高学习成绩的关键。</div>
+                    <div class="explanation">解析：原句前后不一致，前面是"能否"两个方面，后面是"关键"一个方面。</div>
+                </div>
+            </div>
+            
+            <!-- 题目5 -->
+            <div class="question">
+                <div class="question-number">题目 5</div>
+                <div class="question-text">我们认真讨论并听取了校长的报告。</div>
+                <button class="answer-btn" onclick="toggleAnswer(5)">查看答案</button>
+                <div class="answer" id="answer5">
+                    <div class="original">原句：我们认真讨论并听取了校长的报告。</div>
+                    <div class="corrected">修改：我们认真听取并讨论了校长的报告。</div>
+                    <div class="explanation">解析：原句逻辑顺序不当，应该先"听取"后"讨论"。</div>
+                </div>
+            </div>
+            
+            <!-- 题目6 -->
+            <div class="question">
+                <div class="question-number">题目 6</div>
+                <div class="question-text">他对自己能否学好电脑，充满了信心。</div>
+                <button class="answer-btn" onclick="toggleAnswer(6)">查看答案</button>
+                <div class="answer" id="answer6">
+                    <div class="original">原句：他对自己能否学好电脑，充满了信心。</div>
+                    <div class="corrected">修改：他对自己能学好电脑，充满了信心。</div>
+                    <div class="explanation">解析：原句前后矛盾，"能否"包含能与不能两个方面，与"充满信心"矛盾。</div>
+                </div>
+            </div>
+            
+            <!-- 题目7 -->
+            <div class="question">
+                <div class="question-number">题目 7</div>
+                <div class="question-text">秋天的北京是一个美丽的季节。</div>
+                <button class="answer-btn" onclick="toggleAnswer(7)">查看答案</button>
+                <div class="answer" id="answer7">
+                    <div class="original">原句：秋天的北京是一个美丽的季节。</div>
+                    <div class="corrected">修改：北京的秋天是一个美丽的季节。</div>
+                    <div class="explanation">解析：原句主宾搭配不当，"北京"不是"季节"。</div>
+                </div>
+            </div>
+            
+            <!-- 题目8 -->
+            <div class="question">
+                <div class="question-number">题目 8</div>
+                <div class="question-text">我们要及时解决并发现学习中存在的问题。</div>
+                <button class="answer-btn" onclick="toggleAnswer(8)">查看答案</button>
+                <div class="answer" id="answer8">
+                    <div class="original">原句：我们要及时解决并发现学习中存在的问题。</div>
+                    <div class="corrected">修改：我们要及时发现并解决学习中存在的问题。</div>
+                    <div class="explanation">解析：原句逻辑顺序不当，应该先"发现"后"解决"。</div>
+                </div>
+            </div>
+            
+            <!-- 题目9 -->
+            <div class="question">
+                <div class="question-number">题目 9</div>
+                <div class="question-text">由于运用了科学的复习方法，他的学习效率有了很大改进。</div>
+                <button class="answer-btn" onclick="toggleAnswer(9)">查看答案</button>
+                <div class="answer" id="answer9">
+                    <div class="original">原句：由于运用了科学的复习方法，他的学习效率有了很大改进。</div>
+                    <div class="corrected">修改：由于运用了科学的复习方法，他的学习效率有了很大提高。</div>
+                    <div class="explanation">解析：原句搭配不当，"效率"应与"提高"搭配，而不是"改进"。</div>
+                </div>
+            </div>
+            
+            <!-- 题目10 -->
+            <div class="question">
+                <div class="question-number">题目 10</div>
+                <div class="question-text">各种新发现的流行病，使我们改正并认识了自己不良的卫生习惯。</div>
+                <button class="answer-btn" onclick="toggleAnswer(10)">查看答案</button>
+                <div class="answer" id="answer10">
+                    <div class="original">原句：各种新发现的流行病，使我们改正并认识了自己不良的卫生习惯。</div>
+                    <div class="corrected">修改：各种新发现的流行病，使我们认识并改正了自己不良的卫生习惯。</div>
+                    <div class="explanation">解析：原句逻辑顺序不当，应该先"认识"后"改正"。</div>
+                </div>
+            </div>
+            
+            <!-- 题目11 -->
+            <div class="question">
+                <div class="question-number">题目 11</div>
+                <div class="question-text">我们一定要发扬和继承神农炎帝坚韧不拔、开拓创新的精神。</div>
+                <button class="answer-btn" onclick="toggleAnswer(11)">查看答案</button>
+                <div class="answer" id="answer11">
+                    <div class="original">原句：我们一定要发扬和继承神农炎帝坚韧不拔、开拓创新的精神。</div>
+                    <div class="corrected">修改：我们一定要继承和发扬神农炎帝坚韧不拔、开拓创新的精神。</div>
+                    <div class="explanation">解析：原句逻辑顺序不当，应该先"继承"后"发扬"。</div>
+                </div>
+            </div>
+            
+            <!-- 题目12 -->
+            <div class="question">
+                <div class="question-number">题目 12</div>
+                <div class="question-text">材料厂经过技术革新，成本下降了一倍，而产值却增长了10%。</div>
+                <button class="answer-btn" onclick="toggleAnswer(12)">查看答案</button>
+                <div class="answer" id="answer12">
+                    <div class="original">原句：材料厂经过技术革新，成本下降了一倍，而产值却增长了10%。</div>
+                    <div class="corrected">修改：材料厂经过技术革新，成本下降了一半，而产值却增长了10%。</div>
+                    <div class="explanation">解析：原句用词不当，"下降"不能用"倍"表示，应用分数或百分比。</div>
+                </div>
+            </div>
+            
+            <!-- 题目13 -->
+            <div class="question">
+                <div class="question-number">题目 13</div>
+                <div class="question-text">老师为了培养我们，可真是废寝忘食，处心积虑。</div>
+                <button class="answer-btn" onclick="toggleAnswer(13)">查看答案</button>
+                <div class="answer" id="answer13">
+                    <div class="original">原句：老师为了培养我们，可真是废寝忘食，处心积虑。</div>
+                    <div class="corrected">修改：老师为了培养我们，可真是废寝忘食，呕心沥血。</div>
+                    <div class="explanation">解析：原句用词不当，"处心积虑"是贬义词，不能用于形容老师。</div>
+                </div>
+            </div>
+            
+            <!-- 题目14 -->
+            <div class="question">
+                <div class="question-number">题目 14</div>
+                <div class="question-text">最近全国各地加大了对醉酒驾车的惩处力度，为的是避免那些骇人听闻的交通事故不再发生。</div>
+                <button class="answer-btn" onclick="toggleAnswer(14)">查看答案</button>
+                <div class="answer" id="answer14">
+                    <div class="original">原句：最近全国各地加大了对醉酒驾车的惩处力度，为的是避免那些骇人听闻的交通事故不再发生。</div>
+                    <div class="corrected">修改：最近全国各地加大了对醉酒驾车的惩处力度，为的是避免那些骇人听闻的交通事故再次发生。</div>
+                    <div class="explanation">解析：原句否定不当，"避免"与"不再"形成双重否定，使句意相反。</div>
+                </div>
+            </div>
+            
+            <!-- 题目15 -->
+            <div class="question">
+                <div class="question-number">题目 15</div>
+                <div class="question-text">一个人能否成为真正的读者，关键在于他青少年时期养成良好的读书习惯。</div>
+                <button class="answer-btn" onclick="toggleAnswer(15)">查看答案</button>
+                <div class="answer" id="answer15">
+                    <div class="original">原句：一个人能否成为真正的读者，关键在于他青少年时期养成良好的读书习惯。</div>
+                    <div class="corrected">修改：一个人能否成为真正的读者，关键在于他青少年时期是否养成良好的读书习惯。</div>
+                    <div class="explanation">解析：原句前后不一致，前面是"能否"两个方面，后面是一个方面，应加上"是否"。</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>修改病句练习 &copy; 2023 - 语文学习资料</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleAnswer(questionNum) {
+            const answer = document.getElementById(`answer${questionNum}`);
+            answer.classList.toggle('show');
+            
+            const button = event.target;
+            if (answer.classList.contains('show')) {
+                button.textContent = '隐藏答案';
+            } else {
+                button.textContent = '查看答案';
+            }
+        }
+    </script>
+</body>
+</html>
