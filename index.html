@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改病句练习</title>
+    <style>
+        /* 您的CSS样式 */
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .question { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>修改病句练习</h1>
+    
+    <div class="question">
+        <p><strong>题目 1:</strong> 通过这次活动，使同学们认识到学习的重要性。</p>
+        <button onclick="toggleAnswer(1)">查看答案</button>
+        <div id="answer1" style="display: none;">
+            <p><strong>修改:</strong> 这次活动使同学们认识到学习的重要性。</p>
+            <p><em>解析: 原句主语残缺，去掉"通过"或"使"其中一个即可。</em></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(num) {
+            const answer = document.getElementById('answer' + num);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
