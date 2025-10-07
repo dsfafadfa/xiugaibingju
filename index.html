@@ -3,30 +3,643 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>修改病句练习</title>
+    <title>五年级修改病句选择题闯关</title>
     <style>
-        /* 您的CSS样式 */
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .question { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        * {
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: #e8f4fc;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        .level-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .level {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 8px 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+        .level.active {
+            background-color: #3498db;
+            color: white;
+            transform: scale(1.1);
+        }
+        .level.completed {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .question-card {
+            background-color: #f9f9f9;
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+        .option {
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .option:hover {
+            background-color: #f1f8ff;
+            border-color: #a0d2ff;
+        }
+        .option.selected {
+            background-color: #e1f0fa;
+            border-color: #3498db;
+        }
+        .option.correct {
+            background-color: #d4f8e8;
+            border-color: #2ecc71;
+        }
+        .option.incorrect {
+            background-color: #fdeaea;
+            border-color: #e74c3c;
+        }
+        .option-label {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .feedback.correct {
+            background-color: #d4f8e8;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .feedback.incorrect {
+            background-color: #fdeaea;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .feedback .explanation {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .submit-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .next-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .next-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+        .hint-btn {
+            background-color: #f39c12;
+            color: white;
+        }
+        .hint-btn:hover {
+            background-color: #d68910;
+            transform: translateY(-2px);
+        }
+        .restart-btn {
+            background-color: #e74c3c;
+            color: white;
+            margin-top: 20px;
+        }
+        .restart-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+        .final-score {
+            text-align: center;
+            display: none;
+            padding: 30px;
+            animation: fadeIn 1s;
+        }
+        .final-score h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .decoration {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(52, 152, 219, 0.1);
+            z-index: 0;
+        }
+        .decoration-1 {
+            top: -100px;
+            right: -100px;
+        }
+        .decoration-2 {
+            bottom: -100px;
+            left: -100px;
+            background: rgba(46, 204, 113, 0.1);
+        }
+        .game-content {
+            position: relative;
+            z-index: 1;
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s;
+        }
     </style>
 </head>
 <body>
-    <h1>修改病句练习</h1>
-    
-    <div class="question">
-        <p><strong>题目 1:</strong> 通过这次活动，使同学们认识到学习的重要性。</p>
-        <button onclick="toggleAnswer(1)">查看答案</button>
-        <div id="answer1" style="display: none;">
-            <p><strong>修改:</strong> 这次活动使同学们认识到学习的重要性。</p>
-            <p><em>解析: 原句主语残缺，去掉"通过"或"使"其中一个即可。</em></p>
+    <div class="container">
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+        
+        <div class="game-content">
+            <div class="header">
+                <h1>五年级修改病句闯关挑战</h1>
+                <p class="subtitle">选择最合适的修改方案，提高你的语文水平！</p>
+            </div>
+            
+            <div class="game-info">
+                <div>当前关卡: <span id="current-level">1</span>/10</div>
+                <div>得分: <span id="score">0</span>/10</div>
+                <div>进度: <span id="progress">1</span>/10</div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            
+            <div class="level-indicator" id="level-indicator">
+                <!-- 关卡指示器将由JS动态生成 -->
+            </div>
+            
+            <div id="game-area">
+                <div class="question-card">
+                    <div class="question-text" id="question-text"></div>
+                    <div class="options" id="options-container">
+                        <!-- 选项将由JS动态生成 -->
+                    </div>
+                    <div class="feedback" id="feedback">
+                        <div id="feedback-text"></div>
+                        <div class="explanation" id="explanation"></div>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button class="hint-btn" id="hint-btn">提示</button>
+                    <button class="submit-btn" id="submit-btn" disabled>提交答案</button>
+                    <button class="next-btn" id="next-btn" style="display: none;">下一关</button>
+                </div>
+            </div>
+            
+            <div class="final-score" id="final-score">
+                <h2>恭喜你完成所有关卡！</h2>
+                <div class="score-circle" id="final-score-circle">0</div>
+                <p>你的最终得分是: <span id="final-score-value">0</span>/10</p>
+                <button class="restart-btn" id="restart-btn">重新挑战</button>
+            </div>
         </div>
     </div>
 
     <script>
-        function toggleAnswer(num) {
-            const answer = document.getElementById('answer' + num);
-            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        // 题目数据
+        const questions = [
+            {
+                question: "下列句子中，没有语病的一项是：",
+                options: [
+                    "A. 他穿着一件灰色上衣，一顶蓝色帽子。",
+                    "B. 花园里开满了五颜六色的红花。",
+                    "C. 上课了，都在聚精会神地听老师讲课。",
+                    "D. 在老师的帮助下，我很快改正了错误。"
+                ],
+                correctAnswer: 3, // D选项的索引
+                explanation: "A选项搭配不当，帽子不能'穿'，应改为'戴着一顶蓝色帽子'；B选项前后矛盾，'五颜六色'与'红花'矛盾；C选项缺少主语，应加上'同学们'；D选项没有语病。",
+                hint: "注意检查句子成分是否完整，词语搭配是否恰当，前后意思是否矛盾。"
+            },
+            {
+                question: "下列句子中，有语病的一项是：",
+                options: [
+                    "A. 他提出并解决了这个问题。",
+                    "B. 我们要发扬优点，改正缺点。",
+                    "C. 我断定他大概不会来了。",
+                    "D. 他第一个举手发言。"
+                ],
+                correctAnswer: 2, // C选项的索引
+                explanation: "C选项前后矛盾，'断定'表示肯定，'大概'表示不确定，两者矛盾。应改为'我估计他大概不会来了'或'我断定他不会来了'。",
+                hint: "注意词语之间的逻辑关系，避免意思矛盾的词语同时出现。"
+            },
+            {
+                question: "下列句子中，需要修改的一项是：",
+                options: [
+                    "A. 他的成绩有了明显的提高。",
+                    "B. 我不禁忍不住笑出声来。",
+                    "C. 我们要保护环境，爱护地球。",
+                    "D. 他穿着一件新买的衣服。"
+                ],
+                correctAnswer: 1, // B选项的索引
+                explanation: "B选项语义重复，'不禁'和'忍不住'意思相近，保留一个即可。应改为'我忍不住笑出声来'或'我不禁笑出声来'。",
+                hint: "检查句子中是否有意思重复的词语，避免语义重复。"
+            },
+            {
+                question: "下列句子中，修改正确的一项是：",
+                options: [
+                    "A. 原句：这是有趣的一本童话故事书。修改：这是一本有趣的童话故事书。",
+                    "B. 原句：他首先第一个举手发言。修改：他首先举手发言。",
+                    "C. 原句：我们一定要发挥艰苦朴素的优良作风。修改：我们一定要发挥艰苦朴素的优良作风。",
+                    "D. 原句：在老师的帮助下，使他很快改正了错误。修改：在老师的帮助下，使他很快改正了错误。"
+                ],
+                correctAnswer: 0, // A选项的索引
+                explanation: "A选项修改正确，将'有趣的一本'改为'一本有趣的'，符合汉语语序习惯；B选项修改不彻底，'首先'和'第一个'重复，应改为'他第一个举手发言'；C、D选项没有修改，原句有语病。",
+                hint: "注意汉语中数量词和形容词的语序，以及句子成分是否完整。"
+            },
+            {
+                question: "下列句子中，没有语病的一项是：",
+                options: [
+                    "A. 通过这次活动，使我受到了深刻的教育。",
+                    "B. 他提出并解决了这个问题。",
+                    "C. 他的成绩有了明显的增加。",
+                    "D. 我们要发挥优点，改进缺点。"
+                ],
+                correctAnswer: 1, // B选项的索引
+                explanation: "A选项缺少主语，应去掉'通过'或'使'；B选项没有语病；C选项搭配不当，'成绩'应与'提高'搭配，而不是'增加'；D选项搭配不当，'发挥优点'应改为'发扬优点'，'改进缺点'应改为'改正缺点'。",
+                hint: "注意检查句子是否缺少必要成分，以及动词和宾语的搭配是否恰当。"
+            },
+            {
+                question: "下列句子中，有语病的一项是：",
+                options: [
+                    "A. 对于调动工作这个问题上，我曾仔细地考虑过。",
+                    "B. 他虽然年纪小，但是胆子很大。",
+                    "C. 我们不仅要有知识，还要善于运用知识。",
+                    "D. 他戴着一顶新买的帽子。"
+                ],
+                correctAnswer: 0, // A选项的索引
+                explanation: "A选项句式杂糅，'对于...这个问题上'搭配不当。应改为'关于调动工作这个问题，我曾仔细地考虑过'或'对于调动工作，我曾仔细地考虑过'。",
+                hint: "注意介词结构的使用是否正确，避免句式杂糅。"
+            },
+            {
+                question: "下列句子中，修改不正确的一项是：",
+                options: [
+                    "A. 原句：我不禁忍不住笑出声来。修改：我忍不住笑出声来。",
+                    "B. 原句：他首先第一个举手发言。修改：他第一个举手发言。",
+                    "C. 原句：花园里开满了五颜六色的红花。修改：花园里开满了五颜六色的花。",
+                    "D. 原句：他的成绩有了明显的增加。修改：他的成绩有了明显的增加。"
+                ],
+                correctAnswer: 3, // D选项的索引
+                explanation: "D选项修改不正确，原句'成绩有了明显的增加'搭配不当，'成绩'应与'提高'搭配，而不是'增加'。应改为'他的成绩有了明显的提高'。",
+                hint: "注意动词和宾语的搭配是否恰当，'成绩'通常与'提高'、'进步'等词搭配。"
+            },
+            {
+                question: "下列句子中，没有语病的一项是：",
+                options: [
+                    "A. 在老师的帮助下，使他很快改正了错误。",
+                    "B. 我们一定要发扬艰苦朴素的优良作风。",
+                    "C. 他提出并解决了这个问题。",
+                    "D. 我断定他大概不会来了。"
+                ],
+                correctAnswer: 1, // B选项的索引
+                explanation: "A选项缺少主语，应去掉'使'；B选项没有语病；C选项逻辑顺序不当，应先'发现'问题再'解决'问题；D选项前后矛盾，'断定'和'大概'矛盾。",
+                hint: "注意句子成分是否完整，逻辑顺序是否合理，以及词语之间是否存在矛盾。"
+            },
+            {
+                question: "下列句子中，有语病的一项是：",
+                options: [
+                    "A. 他穿着一件灰色上衣，戴着一顶蓝色帽子。",
+                    "B. 上课了，同学们都在聚精会神地听老师讲课。",
+                    "C. 这是一本有趣的童话故事书。",
+                    "D. 他提出并解决了这个问题。"
+                ],
+                correctAnswer: 3, // D选项的索引
+                explanation: "D选项逻辑顺序不当，通常应先'发现'或'提出'问题，然后再'解决'问题。应改为'他发现并解决了这个问题'。",
+                hint: "注意动作发生的逻辑顺序，确保句子表达符合常理。"
+            },
+            {
+                question: "下列句子中，修改最恰当的一项是：",
+                options: [
+                    "A. 原句：在老师的帮助下，使他很快改正了错误。修改：在老师的帮助下，他很快改正了错误。",
+                    "B. 原句：我们一定要发挥艰苦朴素的优良作风。修改：我们一定要发挥艰苦朴素的优良作风。",
+                    "C. 原句：他提出并解决了这个问题。修改：他提出并解决了这个问题。",
+                    "D. 原句：我断定他大概不会来了。修改：我断定他大概不会来了。"
+                ],
+                correctAnswer: 0, // A选项的索引
+                explanation: "A选项修改最恰当，去掉了多余的'使'字，使句子有了明确的主语'他'；B、C、D选项没有修改，原句都有语病。",
+                hint: "修改病句时要抓住主要问题，使句子表达准确、完整、通顺。"
+            }
+        ];
+
+        // 游戏状态
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        // DOM元素
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const feedback = document.getElementById('feedback');
+        const feedbackText = document.getElementById('feedback-text');
+        const explanation = document.getElementById('explanation');
+        const currentLevelSpan = document.getElementById('current-level');
+        const scoreSpan = document.getElementById('score');
+        const progressSpan = document.getElementById('progress');
+        const finalScore = document.getElementById('final-score');
+        const finalScoreValue = document.getElementById('final-score-value');
+        const finalScoreCircle = document.getElementById('final-score-circle');
+        const restartBtn = document.getElementById('restart-btn');
+        const levelIndicator = document.getElementById('level-indicator');
+        const progressBar = document.getElementById('progress-bar');
+
+        // 初始化游戏
+        function initGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            updateGameInfo();
+            createLevelIndicator();
+            loadQuestion();
+            finalScore.style.display = 'none';
+            document.getElementById('game-area').style.display = 'block';
+            updateProgressBar();
         }
+
+        // 创建关卡指示器
+        function createLevelIndicator() {
+            levelIndicator.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                const levelElement = document.createElement('div');
+                levelElement.className = 'level';
+                if (i === currentQuestionIndex) {
+                    levelElement.classList.add('active');
+                } else if (i < currentQuestionIndex) {
+                    levelElement.classList.add('completed');
+                }
+                levelElement.textContent = i + 1;
+                levelElement.addEventListener('click', () => {
+                    if (i <= currentQuestionIndex) {
+                        currentQuestionIndex = i;
+                        loadQuestion();
+                        updateLevelIndicator();
+                        updateProgressBar();
+                    }
+                });
+                levelIndicator.appendChild(levelElement);
+            }
+        }
+
+        // 更新关卡指示器
+        function updateLevelIndicator() {
+            const levels = document.querySelectorAll('.level');
+            levels.forEach((level, index) => {
+                level.className = 'level';
+                if (index === currentQuestionIndex) {
+                    level.classList.add('active');
+                } else if (index < currentQuestionIndex) {
+                    level.classList.add('completed');
+                }
+            });
+        }
+
+        // 更新进度条
+        function updateProgressBar() {
+            const progressPercentage = (currentQuestionIndex / questions.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+
+        // 更新游戏信息
+        function updateGameInfo() {
+            currentLevelSpan.textContent = currentQuestionIndex + 1;
+            scoreSpan.textContent = score;
+            progressSpan.textContent = currentQuestionIndex + 1;
+        }
+
+        // 加载当前题目
+        function loadQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            questionText.textContent = currentQuestion.question;
+            
+            optionsContainer.innerHTML = '';
+            selectedOption = null;
+            
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = `
+                    <span class="option-label">${String.fromCharCode(65 + index)}</span>
+                    <span class="option-text">${option}</span>
+                `;
+                optionElement.addEventListener('click', () => selectOption(optionElement, index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            feedback.style.display = 'none';
+            submitBtn.disabled = true;
+            nextBtn.style.display = 'none';
+            updateGameInfo();
+        }
+
+        // 选择选项
+        function selectOption(optionElement, index) {
+            // 重置所有选项的选中状态
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // 设置当前选项为选中状态
+            optionElement.classList.add('selected');
+            selectedOption = index;
+            submitBtn.disabled = false;
+        }
+
+        // 提交答案
+        function submitAnswer() {
+            if (selectedOption === null) return;
+            
+            const currentQuestion = questions[currentQuestionIndex];
+            const isCorrect = selectedOption === currentQuestion.correctAnswer;
+            
+            // 显示正确答案和错误答案的样式
+            document.querySelectorAll('.option').forEach((option, index) => {
+                if (index === currentQuestion.correctAnswer) {
+                    option.classList.add('correct');
+                } else if (index === selectedOption && !isCorrect) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // 更新分数
+            if (isCorrect) {
+                score++;
+                scoreSpan.textContent = score;
+            }
+            
+            // 显示反馈
+            feedbackText.textContent = isCorrect ? '回答正确！' : '回答不正确。';
+            explanation.textContent = currentQuestion.explanation;
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.style.display = 'block';
+            
+            submitBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        // 显示提示
+        function showHint() {
+            const currentQuestion = questions[currentQuestionIndex];
+            feedbackText.textContent = currentQuestion.hint;
+            explanation.textContent = '';
+            feedback.className = 'feedback hint';
+            feedback.style.display = 'block';
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+                updateLevelIndicator();
+                updateProgressBar();
+            } else {
+                // 游戏结束
+                finalScoreValue.textContent = score;
+                finalScoreCircle.textContent = score;
+                finalScore.style.display = 'block';
+                document.getElementById('game-area').style.display = 'none';
+            }
+        }
+
+        // 事件监听
+        submitBtn.addEventListener('click', submitAnswer);
+        hintBtn.addEventListener('click', showHint);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', initGame);
+
+        // 初始化游戏
+        initGame();
     </script>
 </body>
 </html>
